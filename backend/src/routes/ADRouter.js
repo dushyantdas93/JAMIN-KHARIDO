@@ -1,4 +1,4 @@
-import { postFlatAd, postHomeAd, postLandAd, postShopAd } from "../controllers/adController.js";
+import { deleteFlatAd, deleteHomeAd,  deleteLandAd,  deleteShopAd,  editFlatAd,  editHomeAd,  editLandAd,  editShopAd,  getAllFlatAds,  getAllHomeAds,  getAllLandAds,  getAllShopAds,  postFlatAd, postHomeAd, postLandAd, postShopAd } from "../controllers/adController.js";
 // import { app } from "../index.js";
 
 import express from "express";
@@ -11,10 +11,11 @@ export const AdRouter = express.Router();
  * READ
 //  *
 //  */
-// AdRouter.get("/homes", getAllHomeAds);
-// AdRouter.get("/flats", getAllFlatAds);
-// AdRouter.get("/lands", getAllLandAds);
-// AdRouter.get("/shops", getAllShopAds);
+
+AdRouter.get("/homes",getAllHomeAds);
+AdRouter.get("/flats", getAllFlatAds);
+AdRouter.get("/lands", getAllLandAds);
+AdRouter.get("/shops", getAllShopAds);
 // /**
 //  *
 //  * CREATE
@@ -48,16 +49,46 @@ AdRouter.post(
 //  * UPDATE
 //  *
 //  */
-// AdRouter.put("/homes/:id", editHomeAd);
-// AdRouter.put("/flats/:id", editFlatAd);
-// AdRouter.put("/lands/:id", editLandAd);
-// AdRouter.put("/shops/:id", editShopAd);
+
+AdRouter.put(
+  "/homes/:homeAdId",
+  authMiddlewareInstance.agentMiddleware,
+  upload.array("homeAdImages", 5),
+  editHomeAd
+);
+
+
+AdRouter.put("/flats/:homeAdId", authMiddlewareInstance.agentMiddleware,
+  upload.array("homeAdImages", 5), editFlatAd);
+AdRouter.put("/lands/:homeAdId", authMiddlewareInstance.agentMiddleware,
+  upload.array("homeAdImages", 5), editLandAd);
+AdRouter.put("/shops/:homeAdId", authMiddlewareInstance.agentMiddleware,
+  upload.array("homeAdImages", 5), editShopAd);
 // /**
 //  *
 //  * DELETE
 //  *
 //  */
 // AdRouter.delete("/homes/:id", deleteHomeAd);
-// AdRouter.delete("/flats/:id", deleteFlatAd);
-// AdRouter.delete("/lands/:id", deleteLandAd);
-// AdRouter.delete("/shops/:id", deleteShopAd);
+
+AdRouter.delete(
+  "/homes/:homeAdId",
+  authMiddlewareInstance.agentMiddleware,
+  deleteHomeAd
+);
+
+AdRouter.delete(
+  "/flats/:homeAdId",
+  authMiddlewareInstance.agentMiddleware,
+  deleteFlatAd
+);
+AdRouter.delete(
+  "/lands/:homeAdId",
+  authMiddlewareInstance.agentMiddleware,
+  deleteLandAd
+);
+AdRouter.delete(
+  "/shops/:homeAdId",
+  authMiddlewareInstance.agentMiddleware,
+  deleteShopAd
+);
