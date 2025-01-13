@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
 import { Agent } from "../models/agent.js";
+import { encryptToken } from "../utils/crypto.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 const customerLoginSchema = z.object({
   password: z
     .string()
@@ -18,7 +20,7 @@ const agentLoginSchema = z.object({
 });
 
 export const customerLogin = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const { email, password } = req.body;
 
@@ -50,7 +52,7 @@ export const customerLogin = async (req, res) => {
 
     if (matched) {
       const expiryDuration = 24 * 60 * 60 * 1000; // 1 day in milliseconds
-      const token = await jwt.sign(
+      let oldtoken = await jwt.sign(
         {
           email: isPresent.email,
           _id: isPresent._id,
@@ -59,13 +61,19 @@ export const customerLogin = async (req, res) => {
         { expiresIn: "1d" } // Set token expiration
       );
 
-      isPresent.token = token; // Assuming the Customer model has a `token` field
+      const token = await encryptToken(oldtoken, process.env.SECRET_KEY);
+
+      isPresent.token = oldtoken; // Assuming the Customer model has a `token` field
       isPresent.tokenExpiry = new Date(Date.now() + expiryDuration);
       await isPresent.save();
 
       return res
         .status(200)
-        .cookie("customerToken", token, { httpOnly: true, secure: true })
+        .cookie("customerToken", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+          sameSite: "Strict",
+        })
         .json({
           message: "logged in successfully",
           token,
@@ -95,7 +103,7 @@ export const customerLogout = async (req, res) => {
 };
 
 export const agentLogin = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const { email, password } = req.body;
 
@@ -117,35 +125,44 @@ export const agentLogin = async (req, res) => {
     const isPresent = await Agent.findOne({
       email: parsed.data.email,
     }).select("+password");
+
     if (!isPresent) {
       return res.status(400).json({ error: "not present" });
     }
+
     const matched = await bcrypt.compare(
       parsed.data.password,
       isPresent.password
     );
 
     if (matched) {
-      const expiryDuration = 24 * 60 * 60 * 1000; // 1 day in milliseconds
-      const token = await jwt.sign(
-        {
-          email: isPresent.email,
-          _id: isPresent._id,
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: "1d" } // Set token expiration
-      );
+      const refreshToken = await generateRefreshToken({
+        email: isPresent.email,
+        _id: isPresent._id,
+      });
 
-      isPresent.token = token; // Assuming the Customer model has a `token` field
-      isPresent.tokenExpiry = new Date(Date.now() + expiryDuration);
+      const accessToken = await generateAccessToken({
+        email: isPresent.email,
+        _id: isPresent._id,
+      });
+
+      console.log(accessToken);
+
+      const token = await encryptToken(accessToken, process.env.SECRET_KEY);
+
+      isPresent.token = refreshToken;
+
       await isPresent.save();
-
+      const agent = await Agent.findById(isPresent._id).select(
+        "-password -token"
+      );
       return res
         .status(200)
         .cookie("agentToken", token, { httpOnly: true, secure: true })
         .json({
           message: "logged in successfully",
           token,
+          agent,
         });
     } else {
       return res.status(400).json({ message: "invalid credential" });

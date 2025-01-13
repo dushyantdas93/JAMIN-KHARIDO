@@ -6,7 +6,7 @@ import {
 } from "../controllers/authController.js";
 import { app } from "../index.js";
 import express from "express";
-import { authMiddlewareInstance } from "../middlewares/authMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 export const authRouter = express.Router();
 /**
@@ -28,9 +28,5 @@ authRouter.post(
 
   customerLogout
 );
-authRouter.post(
-  "/agent/logout",
-  authMiddlewareInstance.agentMiddleware,
-  agentLogout
-);
+authRouter.post("/agent/logout", authMiddleware.agentMiddleware, agentLogout);
 // authRouter.get("admin/logout", adminLogout);

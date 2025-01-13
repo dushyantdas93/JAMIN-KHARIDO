@@ -11,6 +11,11 @@ const agentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    token: {
+      type: String,
+      default: null,
+    },
+    tokenExpiry: { type: Date },
     password: {
       type: String,
       required: true,

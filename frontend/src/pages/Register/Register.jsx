@@ -61,7 +61,10 @@ const Register = () => {
       className="w-full h-screen bg-cover bg-center relative"
       style={{ backgroundImage: `url(${home})` }}
     >
-      <div className="bg-white lg:absolute h-full lg:h-[96vh] lg:w-[25vw] top-4 right-4 lg:rounded-lg p-10 flex flex-col gap-4">
+      <div className="bg-white lg:absolute h-full lg:h-[96vh] lg:w-[25vw] top-4 right-4 lg:rounded-lg py-20  px-14 flex flex-col gap-8">
+        <h1 className="text-3xl font-semibold text-center">
+          Register your Account
+        </h1>
         <Formik
           initialValues={{
             name: "",
@@ -81,15 +84,15 @@ const Register = () => {
             formData.append("phoneNumber", values.phoneNumber);
             formData.append("image", values.image);
 
-            const result = Dispatch(customer_register(formData))
+            const result = Dispatch(customer_register(formData));
             if (result.meta.requestStatus === "fulfilled") {
               navigate("/login");
             }
-            console.log(result.success)
+            console.log(result.success);
           }}
         >
           {({ setFieldValue }) => (
-            <Form className="flex flex-col gap-2 lg:gap-4">
+            <Form className="flex flex-col gap-2 lg:gap-8">
               {/* Image Upload */}
               <div className="relative">
                 <input
@@ -115,7 +118,7 @@ const Register = () => {
                 <img
                   src={previewImage ? previewImage : user}
                   alt="Preview"
-                  className="rounded-full border"
+                  className="rounded-full ring-2"
                   style={{
                     width: "100px",
                     height: "100px",
@@ -126,14 +129,11 @@ const Register = () => {
 
               {/* Name Field */}
               <div>
-                <label htmlFor="name">
-                  Name <span className="text-red-600">*</span>
-                </label>
                 <Field
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-8 py-1 rounded-md border border-gray-300"
+                  className="w-full pl-4  focus:ring-fuchsia-600 focus:ring-2 h-10 rounded-md border border-gray-300 focus:outline-none"
                   placeholder="Enter your name"
                 />
                 <ErrorMessage
@@ -145,14 +145,11 @@ const Register = () => {
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email">
-                  Email <span className="text-red-600">*</span>
-                </label>
                 <Field
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-8 py-1 rounded-md border border-gray-300"
+                  className="w-full pl-4  focus:ring-fuchsia-600 focus:ring-2 h-10 rounded-md border border-gray-300 focus:outline-none"
                   placeholder="Enter your email"
                 />
                 <ErrorMessage
@@ -164,14 +161,11 @@ const Register = () => {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password">
-                  Password <span className="text-red-600">*</span>
-                </label>
                 <Field
                   type="password"
                   id="password"
                   name="password"
-                  className="w-full px-8 py-1 rounded-md border border-gray-300"
+                  className="w-full pl-4  focus:ring-fuchsia-600 focus:ring-2 h-10 rounded-md border border-gray-300 focus:outline-none"
                   placeholder="Enter your password"
                 />
                 <ErrorMessage
@@ -183,14 +177,11 @@ const Register = () => {
 
               {/* Confirm Password Field */}
               <div>
-                <label htmlFor="confirmPassword">
-                  Confirm Password <span className="text-red-600">*</span>
-                </label>
                 <Field
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
-                  className="w-full px-8 py-1 rounded-md border border-gray-300"
+                  className="w-full pl-4  focus:ring-fuchsia-600 focus:ring-2 h-10 rounded-md border border-gray-300 focus:outline-none"
                   placeholder="Re-enter your password"
                 />
                 <ErrorMessage
@@ -202,14 +193,11 @@ const Register = () => {
 
               {/* Phone Number Field */}
               <div>
-                <label htmlFor="phoneNumber">
-                  Phone Number <span className="text-red-600">*</span>
-                </label>
                 <Field
                   type="text"
                   id="phoneNumber"
                   name="phoneNumber"
-                  className="w-full px-8 py-1 rounded-md border border-gray-300"
+                  className="w-full pl-4  focus:ring-fuchsia-600 focus:ring-2 h-10 rounded-md border border-gray-300 focus:outline-none"
                   placeholder="Enter your phone number"
                 />
                 <ErrorMessage
@@ -222,7 +210,7 @@ const Register = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="px-8 py-1 rounded-md bg-blue-500 text-white w-full"
+                className="px-8 h-10 rounded-md bg-blue-600 text-lg text-white w-full"
               >
                 Submit
               </button>

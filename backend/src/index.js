@@ -9,6 +9,7 @@ import { authRouter } from "./routes/authRouter.js";
 import { agentRouter } from "./routes/agentRouter.js";
 import { AdRouter } from "./routes/ADRouter.js";
 import cors from "cors";
+import { authMiddleware } from "./middlewares/authMiddleware.js";
 // import multer from "multer";
 
 // app.use(cors({ origin: "*" }));
@@ -41,5 +42,12 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/customer", customerRouter);
 app.use("/api/v1/agent", agentRouter);
 app.use("/api/v1/agent", AdRouter);
+app.use(
+  "/api/v1/auth/verify",
+  authMiddleware.customerMiddleware,
+  (req, res) => {
+    res.status(200).json({ user: req.user });
+  }
+);
 
 app.listen(4000, () => console.log("port is running on 4k"));

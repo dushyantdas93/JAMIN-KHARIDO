@@ -11,51 +11,49 @@ import Register from "./pages/Register/Register.jsx";
 import ProtectedRoute from "./Routes/ProtectedRoute.jsx";
 import PublicRoute from "./Routes/PublicRoute.jsx";
 
-
 const App = () => {
-  
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/",
-    element: <ProtectedRoute />,
-    children: [
-      {
-        path: "/exp",
-        element: <Experiment />,
-      },
-      {
-        path: "/ads",
-        element: <Ads />,
-      },
-      {
-        path: "/view-detail",
-        element: <ViewDetails />,
-      },
-    ],
-  },
-  {
-    path: "/",
-    element: <PublicRoute />, // Public routes wrapper
-    children: [
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "register",
-        element: <Register />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <NotFound />,
-  },
-]);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/",
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: "/exp",
+          element: <Experiment />,
+        },
+        {
+          path: "/ads",
+          element: <Ads />,
+        },
+        {
+          path: "/view-detail",
+          element: <ViewDetails />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <PublicRoute />, // Public routes wrapper
+      children: [
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "register",
+          element: <Register />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+  ]);
 
   return (
     <div>

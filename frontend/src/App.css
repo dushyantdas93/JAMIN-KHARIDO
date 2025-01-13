@@ -1,5 +1,7 @@
 /* For the entire scrollbar */
-
+* {
+  font-family: sans-serif;
+}
 html::-webkit-scrollbar {
   display: none;
 }
@@ -15,17 +17,6 @@ html::-webkit-scrollbar {
   height: 4px;
 }
 
-.form input {
-  margin-bottom: 30px;
-  width: 300px;
-  height: 30px;
-  border-width: 0px;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(to right, #d91acc, #5288ff);
-}
-
 /* .single-blog-bg {
   background-size: cover;
   background-attachment: fixed;
@@ -36,12 +27,18 @@ html::-webkit-scrollbar {
 } */
 
 .single-blog-bg:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
   top: 300px;
   bottom: 0;
-  background: linear-gradient(to bottom, white 0%, white 30%, white 60%, white 100%);
-  opacity: .5;
+  background: linear-gradient(
+    to bottom,
+    white 0%,
+    white 30%,
+    white 60%,
+    white 100%
+  );
+  opacity: 0.5;
 }

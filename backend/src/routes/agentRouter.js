@@ -6,7 +6,7 @@ import {
 } from "../controllers/agentController.js";
 
 import express from "express";
-import { authMiddlewareInstance } from "../middlewares/authMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 import { upload } from "../utils/multerConfig.js";
 
 export const agentRouter = express.Router();
@@ -15,10 +15,10 @@ export const agentRouter = express.Router();
  * READ
  *
  */
-agentRouter.get("/me", authMiddlewareInstance.agentMiddleware, getAgentDetails);
+agentRouter.get("/me", authMiddleware.agentMiddleware, getAgentDetails);
 agentRouter.post(
   "/uploadDocument",
-  authMiddlewareInstance.agentMiddleware,
+  authMiddleware.agentMiddleware,
   upload.fields([
     { name: "adhaarImage", maxCount: 1 },
     { name: "panImage", maxCount: 1 },
@@ -40,7 +40,7 @@ agentRouter.post("/", upload.single("image"), createAgent);
  * UPDATE
  *
  */
-agentRouter.put("/", authMiddlewareInstance.agentMiddleware, editAgentDetails);
+agentRouter.put("/", authMiddleware.agentMiddleware, editAgentDetails);
 
 /**
  *

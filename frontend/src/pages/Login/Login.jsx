@@ -19,114 +19,122 @@ const Login = () => {
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
   });
-  
+
   const navigate = useNavigate();
 
   const { userInfo, successMessage, errorMessage, loader } = useSelector(
     (slice) => slice.auth
   );
-  
+
   return (
     <div
-      className=" w-full  h-screen bg-cover bg-center relative "
-      style={{ backgroundImage: `url(${home})`, position: "center" }}
+      className=" w-full  h-screen bg-cover bg-center relative  flex items-center justify-center"
+      style={{
+        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0) 70%), url(${home})`,
+      }}
     >
-      <div>
-        {/* <span className="text-3xl font-bold uppercase p-2 rounded-lg bg-white">Jamin Kharido</span> */}
-      </div>
-      <div className="bg-white lg:absolute h-full lg:h-[96vh] lg:w-[25vw] top-4 right-4 lg:rounded-lg p-10 flex flex-col gap-4 z-10">
-        {/* {successMessage && (
-          <h1 className="text-xs text-green-500">message= {successMessage}</h1>
-        )}
-        {errorMessage && (
-          <h1 className="text-xs text-red-500">error= {errorMessage}</h1>
-        )}
-        <h1>logged in as : {userInfo?.name}</h1> */}
-        <div>
-          <img src={logo} alt="" className="h-8" />
-        </div>
-        <h1 className="text-gray-400 text-lg">Welcome to Jaminkharido</h1>
-        <h1 className="text-gray-600 text-2xl font-bold">
-          Get started with your email or phone number
+      <div className="absolute bottom-24 left-24 text-4xl text-white w-[700px] ">
+        <h1>
+          Join 8 Million Businesses that Trust Razorpay to Supercharge their
+          Business
         </h1>
-        <Formik
-          initialValues={{ email: "", password: "" }}
-          validationSchema={validationSchema}
-          onSubmit={(values) => {
-            // console.log("Form Data:", values);
-            dispatch(customer_login(values)).then(() => navigate("/ads"));
-
-            // console.log(userInfo)
-          }}
-        >
-          {({ isSubmitting }) => (
-            <Form className="flex flex-col gap-4">
-              <div>
-                <label htmlFor="email">Email</label>
-                <Field
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="w-full px-8 py-1 rounded-md border border-gray-300"
-                  placeholder="Enter your email"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  style={{ color: "red" }}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="password">Password</label>
-                <Field
-                  type="password"
-                  id="password"
-                  className="w-full px-8 py-1 rounded-md border border-gray-300"
-                  name="password"
-                  placeholder="Enter your password"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  style={{ color: "red" }}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full px-8 py-1 rounded-md border border-gray-300 bg-blue-500 text-white"
-              >
-                Submit
-              </button>
-            </Form>
-          )}
-        </Formik>
-        <div className="flex justify-between">
-          <Link to="/forgetPassword ">
-            <h1 className="capitalize cursor-pointer text-blue-500 underline">
-              forget password
-            </h1>
-          </Link>
-          <Link to="/register">
-            <h1 className="capitalize cursor-pointer text-blue-500 underline">
-              Register
-            </h1>
-          </Link>
+        <div className="flex gap-5 items-center justify-between font-semibold text-lg mt-8">
+          <div>100+ Payment Methods</div>
+          <div>Easy Integration</div>
+          <div>Powerful Dashboard</div>
         </div>
       </div>
-      <div className="absolute bottom-8 lg:bottom-4 lg:left-10 px-8  lg:px-5 text-xs lg:text-lg  bg-white ">
-        <h1 className="">
-          By continuing you agree to our{" "}
-          <Link to="/">
-            <span className="text-blue-700 cursor-pointer">privacy policy</span>
-          </Link>{" "}
-          and{" "}
-          <Link to="/">
-            <span className="text-blue-700 cursor-pointer">terms of use</span>
-          </Link>
-        </h1>
+      <div className="bg-white lg:absolute  h-full lg:h-[96vh] lg:w-[27vw] top-4 right-4 items-center  lg:rounded-lg p-10 flex flex-col gap-4 z-10 px-16">
+        <div className="py-4 mt-20">
+          <div className="flex flex-col gap-4">
+            <img src={logo} alt="" className="h-8 w-20 mb-2" />
+
+            <h1 className="text-gray-400 text-sm pb-2">
+              Welcome to <span className="font-semibold">Jamin kharido</span>
+            </h1>
+            <h1 className="text-black  text-3xl font-bold pb-8">
+              Get started with your email or phone number
+            </h1>
+          </div>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={validationSchema}
+            onSubmit={(values) => {
+              // console.log("Form Data:", values);
+              dispatch(customer_login(values)).then(() => navigate("/ads"));
+
+              // console.log(userInfo)
+            }}
+          >
+            {({ isSubmitting }) => (
+              <Form className="flex flex-col gap-8 ">
+                <div>
+                  <Field
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="w-full pl-4 bg-white focus:ring-fuchsia-600 focus:ring-2 h-10 rounded-md border border-gray-300 focus:outline-none"
+                    placeholder="Enter your email"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    style={{ color: "red" }}
+                  />
+                </div>
+
+                <div>
+                  <Field
+                    type="password"
+                    id="password"
+                    className="w-full pl-4  focus:ring-fuchsia-600 focus:ring-2 h-10 rounded-md border border-gray-300 focus:outline-none"
+                    name="password"
+                    placeholder="Enter your password"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    style={{ color: "red" }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full px-8 h-10 rounded-md border tracking-wide text-lg border-gray-300 bg-blue-600 text-white"
+                >
+                  Submit
+                </button>
+              </Form>
+            )}
+          </Formik>
+          <div className="flex justify-between gap-8 mt-8 text-sm">
+            <Link to="/forgetPassword ">
+              <h1 className="capitalize cursor-pointer text-blue-600 underline">
+                forgot password
+              </h1>
+            </Link>
+            <Link to="/register">
+              <h1 className="capitalize cursor-pointer text-blue-600 underline">
+                Register
+              </h1>
+            </Link>
+          </div>
+        </div>
+        <div className="absolute bottom-8 lg:bottom-4 lg:left-10 px-8  lg:px-5 text-xs lg:text-lg  bg-white mb-8 ">
+          <h1 className="text-sm text-gray-400 tracking-wide">
+            By continuing you agree to our{" "}
+            <Link to="/">
+              <span className="text-blue-700 cursor-pointer">
+                privacy policy
+              </span>
+            </Link>{" "}
+            and{" "}
+            <Link to="/">
+              <span className="text-blue-700 cursor-pointer">terms of use</span>
+            </Link>
+          </h1>
+        </div>
       </div>
     </div>
   );

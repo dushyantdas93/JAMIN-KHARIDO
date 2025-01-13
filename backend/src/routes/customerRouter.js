@@ -3,7 +3,7 @@ import {
   editCustomerDetails,
   getCustomerDetails,
 } from "../controllers/customerController.js";
-import { authMiddlewareInstance } from "../middlewares/authMiddleware.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 import { upload } from "../utils/multerConfig.js";
 import express from "express";
@@ -14,7 +14,11 @@ export const customerRouter = express.Router();
  * READ
  *
  */
-customerRouter.get("/me",authMiddlewareInstance.customerMiddleware, getCustomerDetails);
+customerRouter.get(
+  "/me",
+  authMiddleware.customerMiddleware,
+  getCustomerDetails
+);
 
 /**
  *
@@ -28,7 +32,7 @@ customerRouter.post("/", upload.single("image"), createCustomer);
  * UPDATE
  *
  */
-customerRouter.put("/",authMiddlewareInstance.customerMiddleware, editCustomerDetails);
+customerRouter.put("/", authMiddleware.customerMiddleware, editCustomerDetails);
 
 /**
  *
